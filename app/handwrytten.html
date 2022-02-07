@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Handwrytten - Send Customized notes to your customers </title>
+    <script src="https://js.zohostatic.com/zohofinance/v1/zf_sdk.js"></script>
+    <script src="js/handwrytten.js"></script>
+    <link rel="stylesheet" href="css/handwrytten.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script>
+      window.onload = function () {
+      ZFAPPS.extension.init().then(async function (App) {
+        ZFAPPS.invoke("RESIZE", { height: "500px", width: "800px" }).then(() => {
+          console.log("Resized successfully");
+        });
+        var options = {
+          url: 'https://api.handwrytten.com/v1/auth/authorization',
+          method: 'GET',
+          connection_link_name: "handwrytten",
+          url_query:
+          [
+            {
+              key: 'login',
+              value: 'bmsowmi97@gmail.com'
+            },
+            {
+              key: 'password',
+              value: 'Sowmiah@13'
+            }
+          ]
+        };
+        await ZFAPPS.request(options).then(function(response) {
+          let body = JSON.parse(response.data.body);
+          var uid = body.uid;
+          getTemplateList(uid);
+        }).catch(function(err) {
+          console.log(err);
+        });
+      });
+    };
+    </script>
+  </head>
+  <body>
+    <div class="alert alert-primary text-center" role="alert">
+     CHOOSE A CARD
+    </div>
+    <div class="card-container row m-0 p-5">
+    </div>
+  </body>
+</html>

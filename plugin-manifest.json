@@ -1,0 +1,29 @@
+{
+    "locale": [
+      "en"
+    ],
+    "service": "FINANCE",
+    "whiteListedDomains": [],
+    "modules": {
+      "widgets": [
+        {
+          "location": "customer.creation.sidebar",
+          "widget_type": "modal",
+          "name": "Handwrytten Extension",
+          "url": "/app/handwrytten.html",
+          "logo": "/app/img/handwrytten.png"
+        }
+      ]
+    },
+    "config": [],
+    "connectors": [],
+    "usedConnections": [{
+      "connectionLinkName": "handwrytten",
+      "connectionName": "handwrytten",
+      "serviceName": "handwrytten",
+      "userAccess": true,
+      "isUserDefinedService": true,
+      "sharedBy": "1538636"
+    }]
+  }
+  
