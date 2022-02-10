@@ -6,16 +6,18 @@
     <script src="https://js.zohostatic.com/zohofinance/v1/zf_sdk.js"></script>
     <script src="js/handwrytten.js"></script>
     <link rel="stylesheet" href="css/handwrytten.css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Freehand&display=swap');
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
       window.onload = function () {
       ZFAPPS.extension.init().then(async function (App) {
-        ZFAPPS.invoke("RESIZE", { height: "500px", width: "800px" }).then(() => {
+        ZFAPPS.invoke("RESIZE", { height: "800px", width: "1000px" }).then(() => {
           console.log("Resized successfully");
         });
         var options = {
@@ -37,19 +39,34 @@
         await ZFAPPS.request(options).then(function(response) {
           let body = JSON.parse(response.data.body);
           var uid = body.uid;
-          getTemplateList(uid);
+          listCards(uid);
+          listCardCategories(uid);
         }).catch(function(err) {
           console.log(err);
         });
       });
+      document.getElementsByTagName('input').onclick = function(){
+        var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+        console.log(markedCheckbox);
+      };
     };
     </script>
   </head>
   <body>
-    <div class="alert alert-primary text-center" role="alert">
-     CHOOSE A CARD
+    <div class="text-center choose-card">Choose a card</div>
+    <div class="card-filter-container">
+      <div class="dropdown">
+        <button class="btn btn-outline card-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">CATEGORIES</button>
+        <div class="dropdown-menu category-dropdown-menu" aria-labelledby="dropdownMenuButton">
+        </div>
+      </div>
     </div>
-    <div class="card-container row m-0 p-5" id="card_container">
+    <div class="justify-content-center mt-5 loading-indicator d-none">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="card-container row m-0 py-4 justify-content-center" id="card_container">
     </div>
     <div class="templates_list">
     </div>

@@ -1,12 +1,90 @@
+body {
+    background-color: #F0F0EB !important;
+}
+.choose-card {
+    font-size: 40px;
+    font-family: 'Freehand', cursive;
+    padding: 10px 0px;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    padding: 10;
+    background: #fff;
+}
+.card-filter-container {
+    left: 0;
+    width: 100%;
+    background: #b6b6a1;
+    text-align: center;
+}
+.card-btn:focus {
+    box-shadow: none !important;
+}
+.category-dropdown-menu {
+    background-color: #F0F0EB !important;
+    margin-top: 0 !important;
+    max-height: 300px;
+    overflow: auto;
+}
+.category-dropdown-list {
+    display: block;
+    text-align: left;
+    white-space: nowrap;
+    padding: 6px 10px;
+}
 .card-container .card {
-    width: 13rem;
+    width: 18rem;
     margin: 10px;
+    padding: 20px;
 }
-
 .card:hover {
-  background-color: Thistle;
+    background-color: #b6b6a1;
 }
+.card-title {
+    font-size: 12px;
+    font-weight: 300;
+}
+.card-category {
+    padding-left: 5px;
+    font-size: 15px;
+    font-weight: 500;
+}
+.card-name {
+    font-size: 16px;
+    font-weight: 400;
+    padding: 10px 0px;
+    border-bottom: 1px solid #DDDDD6;;
+}
+.card-price {
+    font-size: 20px;
+    padding: 5px;
+    font-weight: 500;
+    border-bottom: 1px solid #DDDDD6;
+    border-top: 1px solid #DDDDD6;
 
+}
+.toggle-desc {
+    font-size: 13px !important;
+    background-color:transparent !important;
+    color:black !important;
+    outline:none;
+    border:none !important;
+}
+.card .btn-primary {
+    background: #4BC9C6;
+    border-color: #4BC9C6;
+}
+.card .btn-primary:hover {
+    background: #00B3B3;
+    border-color: #00B3B3;
+    transform: scale(0.8);
+}
+.card .btn-primary:active {
+    box-shadow: none !important;
+    outline: none !important;
+    background: #00B3B3 !important;
+    border-color: #00B3B3 !important;
+}
 .templates {
   margin-bottom: 20px;
   background: white;
@@ -31,19 +109,23 @@ li {
 }
 
  .card-image {
-        position: relative;
-    }
-    .card-image .img-top {
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-    .card-image:hover .img-top {
-        display: block;
-    }
+    position: relative;
+}
+.card-image .img-top {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+/* .card-image:hover .img-top {
+    display: block;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0.00033, 0, 0, 0, 1);
+    transform-origin: center top 0px;
+} */
 
-
-.btn .btn-info{
-       color: black;
+.btn-info{
+    color: black;
+}
+.btn-info:focus{
+    box-shadow: none !important;
 }

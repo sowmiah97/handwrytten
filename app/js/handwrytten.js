@@ -1,7 +1,18 @@
 var globalUid;
-function getTemplateList(uid) {
+var loader;
+function showLoadingIndicator(loader) {
+  loader.classList.add("d-flex");
+}
+
+function hideLoadingIndicator(loader) {
+  loader.classList.remove("d-flex");
+}
+
+function listCards(uid) {
   globalUid = uid;
-  var options = {
+  loader = document.getElementsByClassName("loading-indicator")[0];
+  showLoadingIndicator(loader);
+  let options = {
     url: 'https://api.handwrytten.com/v1/cards/list',
     method: 'GET',
     connection_link_name: "handwrytten",
@@ -13,13 +24,14 @@ function getTemplateList(uid) {
       }
     ]
   };
-  ZFAPPS.request(options).then(function (response) {
+  ZFAPPS.request(options).then(function(response) {
     let body = JSON.parse(response.data.body);
-    console.log(body);
     let listOfCards = body.cards
     constructCardTemplates(listOfCards);
-  }).catch(function (err) {
+  }).catch(function(err) {
     console.log(err);
+  }).finally(() => {
+    hideLoadingIndicator(loader);
   });
 }
 
@@ -36,24 +48,25 @@ function constructCardTemplates(cards) {
   //   </div>
   //  </div>
   let cardContainer = document.querySelector(".card-container");
+  cardContainer.innerHTML="";
   for (var i = 0; i < cards.length; i++) {
     let card = cards[i];
-
-    let hr = document.createElement("hr");
-
     let listItem = document.createElement("div");
     listItem.className = 'card';
 
     let category = document.createElement("h6");
     category.className = 'card-title';
-    category.setAttribute('style','font-size: 16px; font-family: brandon_grotesquebold;');
-    category.textContent = 'Category : ' + card.category_name;
+    category.textContent = 'CATEGORY';
+    let categorySpan = document.createElement("span");
+    categorySpan.className='card-category';
+    categorySpan.textContent=card.category_name;
+    category.appendChild(categorySpan);
     listItem.appendChild(category);
 
-//    <div class="card">
-//        	<img src="/examples/images/card-back.jpg" alt="Card Back">
-//            <img src="/examples/images/card-front.jpg" class="img-top" alt="Card Front">
-//        </div>
+    // <div class="card">
+    //   <img src="/examples/images/card-back.jpg" alt="Card Back">
+    //   <img src="/examples/images/card-front.jpg" class="img-top" alt="Card Front">
+    //  </div>
 
     let imageDisplay = document.createElement("div");
     imageDisplay.className = 'card-image';
@@ -71,48 +84,122 @@ function constructCardTemplates(cards) {
     listItem.appendChild(imageDisplay);
 
     let name = document.createElement("h5");
+    name.className='card-name';
     name.textContent = card.name;
-    name.setAttribute('style','font-size: 16px; font-family: brandon_grotesquebold; border-bottom: 1px solid #DDDDD6;');
     listItem.appendChild(name);
 
     if(card.description) {
       let cardBody= document.createElement("div");
-      cardBody.className = 'card-body';
+      cardBody.className="text-center";
 
-      let toggleButton= document.createElement("button");
-      toggleButton.setAttribute('type','button');
-      toggleButton.setAttribute('class','btn btn-info');
-      toggleButton.setAttribute('style','background-color:transparent;color:black; outline:none; border:none;')
+      let toggleButton= document.createElement("a");
+      toggleButton.setAttribute('href', `#card${i}`);
+      toggleButton.setAttribute('class','btn btn-info px-0 pb-3 toggle-desc');
       toggleButton.setAttribute('data-toggle','collapse');
-      toggleButton.setAttribute('data-target', '#' + card.id);
-      toggleButton.textContent = 'Show Description'
+      toggleButton.textContent = 'SHOW DESCRIPTION';
       cardBody.appendChild(toggleButton);
 
       let cardDesc = document.createElement("div");
-      cardDesc.className = 'collapse';
-      cardDesc.id = card.id;
-      cardDesc.textContent = card.description;
+      cardDesc.setAttribute('id', `card${i}`);
+      cardDesc.setAttribute('name', `card${i}`);
+      cardDesc.className='collapse pb-2';
+      cardDesc.textContent=card.description;
       cardBody.appendChild(cardDesc);
       listItem.appendChild(cardBody);
     }
 
     let price = document.createElement("h5");
+    price.className="card-price"
     price.textContent = "$" + card.price;
-    price.setAttribute('style','font-size: 20px; font-family: brandon_grotesquebold; border-bottom: 1px solid #DDDDD6; border-up: 1px solid #DDDDD6;');
-
     listItem.appendChild(price);
 
-    let button = document.createElement("button");
-    //button.className = 'btn btn-primary';
-    button.textContent = 'Send';
-    button.addEventListener('click',function(){send()});
+    let button = document.createElement("a");
+    button.classList.add('btn', 'btn-primary');
+    button.textContent = 'SEND';
+    button.addEventListener('click',function(){sendCard()});
     listItem.appendChild(button);
     cardContainer.appendChild(listItem);
   }
-  }
+}
 
-function send() {
-console.log("send called");
+function listCardCategories(uid) {
+  let options = {
+    url: 'https://api.handwrytten.com/v1/categories/list',
+    method: 'GET',
+    connection_link_name: "handwrytten",
+    url_query:
+    [
+      {
+        key: 'uid',
+        value: uid
+      }
+    ]
+  };
+  ZFAPPS.request(options).then(function(response) {
+    let body = JSON.parse(response.data.body);
+    let {categories} = body;
+    listCategoriesInDropdown(categories);
+  }).catch(function(err) {
+    console.log(err);
+  })
+}
+
+function listCategoriesInDropdown(categories) {
+  // <div class="form-check dropdown-item">
+  //    <input type="checkbox" class="form-check-input" id="dropdownCheck">
+  //    <label class="form-check-label" for="dropdownCheck">
+  //      Remember me
+  //    </label>
+  //  </div>
+  let dropDownContainer = document.querySelector(".category-dropdown-menu");
+  categories.forEach((category)=> {
+    let div = document.createElement("div");
+    div.classList.add('form-check', 'dropdown-item');
+    let input = document.createElement("input");
+    input.setAttribute('type', 'checkbox');
+    input.setAttribute('id', category.id);
+    input.onclick=function() {
+      let category = input.id;
+      loadSpecificCardCategory(category)
+    }
+    input.classList.add('form-check-input');
+    
+    div.appendChild(input);
+    let label = document.createElement("label")
+    label.classList.add('form-check-label');
+    label.setAttribute('for', category.slug);
+    label.textContent=category.name;
+    div.appendChild(label);
+    dropDownContainer.appendChild(div);
+  });
+}
+
+function loadSpecificCardCategory(id) {
+  var options = {
+    url: `https://api.handwrytten.com/v1/cards/list?category_id=${id}`,
+    method: 'GET',
+    connection_link_name: "handwrytten",
+    url_query:
+    [
+      {
+        key: 'uid',
+        value: globalUid
+      }
+    ]
+  };
+  showLoadingIndicator(loader);
+  ZFAPPS.request(options).then(function (response) {
+    let body = JSON.parse(response.data.body);
+    let listOfCards = body.cards
+    constructCardTemplates(listOfCards);
+  }).catch(function (err) {
+    console.log(err);
+  }).finally(() => {
+    hideLoadingIndicator(loader);
+  });
+}
+
+function sendCard() {
   var x = document.getElementById("card_container");
   if (x.style.display === "none")
   {
@@ -120,7 +207,6 @@ console.log("send called");
   } else {
     x.style.display = "none";
   }
-
   let button = document.createElement("button");
   button.textContent = 'Use Templates';
   button.addEventListener('click',function(){showTemplates()});
@@ -128,9 +214,8 @@ console.log("send called");
   document.body.appendChild(button);
 }
 
-function showTemplates()
-{
-var options = {
+function showTemplates() {
+  var options = {
     url: 'https://api.handwrytten.com/v1/templates/list',
     method: 'GET',
     connection_link_name: "handwrytten",
@@ -143,7 +228,6 @@ var options = {
     ]
   };
   ZFAPPS.request(options).then(function (response) {
-    console.log(response);
     let body = JSON.parse(response.data.body);
     let listOfTemplates = body.templates
     constructTemplates(listOfTemplates);
@@ -153,10 +237,10 @@ var options = {
 }
 
 function constructTemplates(listOfTemplates) {
-//  <div class="templates">
-//      <p>Test 1</p>
-//      <button type="button">Click Me!</button>
-//   </div>
+  //  <div class="templates">
+  //      <p>Test 1</p>
+  //      <button type="button">Click Me!</button>
+  //   </div>
   let templates = document.querySelector(".templates_list");
   for (var i = 0; i < listOfTemplates.length; i++) {
     let template = listOfTemplates[i];
@@ -173,6 +257,6 @@ function constructTemplates(listOfTemplates) {
     listItem.appendChild(button);
     templates.appendChild(listItem);
   }
-   var x = document.getElementById("use_template");
-   x.style.display = "none";
-  }
+  var x = document.getElementById("use_template");
+  x.style.display = "none";
+}
