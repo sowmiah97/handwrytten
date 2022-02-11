@@ -3,6 +3,10 @@
     margin: 10px;
 }
 
+.card:hover {
+  background-color: Thistle;
+}
+
 .templates {
   margin-bottom: 20px;
   background: white;
@@ -24,4 +28,22 @@
 
 li {
   display: inline-block;
+}
+
+ .card-image {
+        position: relative;
+    }
+    .card-image .img-top {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .card-image:hover .img-top {
+        display: block;
+    }
+
+
+.btn .btn-info{
+       color: black;
 }

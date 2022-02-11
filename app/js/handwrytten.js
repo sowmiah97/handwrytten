@@ -46,81 +46,61 @@ function constructCardTemplates(cards) {
 
     let category = document.createElement("h6");
     category.className = 'card-title';
-    category.textContent = 'CATEGORY : ' + card.category_name;
+    category.setAttribute('style','font-size: 16px; font-family: brandon_grotesquebold;');
+    category.textContent = 'Category : ' + card.category_name;
     listItem.appendChild(category);
-    listItem.appendChild(hr);
 
-    let carousel = document.createElement("div");
-    carousel.className = 'carousel slide';
-    carousel.setAttribute("data-ride", "carousel");
+//    <div class="card">
+//        	<img src="/examples/images/card-back.jpg" alt="Card Back">
+//            <img src="/examples/images/card-front.jpg" class="img-top" alt="Card Front">
+//        </div>
 
-    let carouselInner = document.createElement("div");
-    carouselInner.className = 'carousel-inner';
-
-    let carouselItemCover = document.createElement("div");
-    carouselItemCover.className = 'carousel-item active';
+    let imageDisplay = document.createElement("div");
+    imageDisplay.className = 'card-image';
 
     let coverImage = document.createElement("img");
-    coverImage.className = 'd-block w-100';
     coverImage.src = card.cover;
-    carouselItemCover.appendChild(coverImage);
-
-    let carouselItemInsideImage = document.createElement("div");
-    carouselItemInsideImage.className = 'carousel-item';
+    coverImage.className = 'card-img-top';
+    imageDisplay.appendChild(coverImage);
 
     let insideImage = document.createElement("img");
-    insideImage.className = 'd-block w-100';
     insideImage.src = card.inside_image;
-    carouselItemInsideImage.appendChild(insideImage);
+    insideImage.className = 'card-img-top img-top';
+    imageDisplay.appendChild(insideImage);
 
-    carouselInner.appendChild(carouselItemCover);
-    carouselInner.appendChild(carouselItemInsideImage);
-    carousel.appendChild(carouselInner);
+    listItem.appendChild(imageDisplay);
 
-
-    let carouselPrev = document.createElement("a");
-    carouselPrev.className = 'carousel-control-prev';
-    carouselPrev.setAttribute("href", "#carouselExampleControls");
-    carouselPrev.setAttribute("role", "button");
-    carouselPrev.setAttribute("data-slide", "prev");
-
-    let carouselPrevIcon = document.createElement("span");
-    carouselPrevIcon.className = 'carousel-control-prev-icon';
-    carouselPrevIcon.setAttribute("aria-hidden", "true");
-    carouselPrev.appendChild(carouselPrevIcon);
-
-    let spanPrev = document.createElement("span");
-    spanPrev.className = 'sr-only';
-    carouselPrev.appendChild(spanPrev);
-    carousel.appendChild(carouselPrev);
-
-    let carouselNext = document.createElement("a");
-    carouselNext.className = 'carousel-control-next';
-    carouselNext.setAttribute("href", "#carouselExampleControls");
-    carouselNext.setAttribute("role", "button");
-    carouselNext.setAttribute("data-slide", "next");
-
-    let carouselNextIcon = document.createElement("span");
-    carouselNextIcon.className = 'carousel-control-next-icon';
-    carouselNextIcon.setAttribute("aria-hidden", "true");
-    carouselNext.appendChild(carouselNextIcon);
-
-    let spanNext = document.createElement("span");
-    spanNext.className = 'sr-only';
-    carouselNext.appendChild(spanNext);
-    carousel.appendChild(carouselNext);
-
-    listItem.appendChild(carousel);
+    let name = document.createElement("h5");
+    name.textContent = card.name;
+    name.setAttribute('style','font-size: 16px; font-family: brandon_grotesquebold; border-bottom: 1px solid #DDDDD6;');
+    listItem.appendChild(name);
 
     if(card.description) {
       let cardBody= document.createElement("div");
       cardBody.className = 'card-body';
-      let cardDesc = document.createElement("p");
-      cardDesc.className = 'card-text';
+
+      let toggleButton= document.createElement("button");
+      toggleButton.setAttribute('type','button');
+      toggleButton.setAttribute('class','btn btn-info');
+      toggleButton.setAttribute('style','background-color:transparent;color:black; outline:none; border:none;')
+      toggleButton.setAttribute('data-toggle','collapse');
+      toggleButton.setAttribute('data-target', '#' + card.id);
+      toggleButton.textContent = 'Show Description'
+      cardBody.appendChild(toggleButton);
+
+      let cardDesc = document.createElement("div");
+      cardDesc.className = 'collapse';
+      cardDesc.id = card.id;
       cardDesc.textContent = card.description;
       cardBody.appendChild(cardDesc);
       listItem.appendChild(cardBody);
     }
+
+    let price = document.createElement("h5");
+    price.textContent = "$" + card.price;
+    price.setAttribute('style','font-size: 20px; font-family: brandon_grotesquebold; border-bottom: 1px solid #DDDDD6; border-up: 1px solid #DDDDD6;');
+
+    listItem.appendChild(price);
 
     let button = document.createElement("button");
     //button.className = 'btn btn-primary';
