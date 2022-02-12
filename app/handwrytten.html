@@ -69,29 +69,16 @@
     <div id="second-page" style="display: none;">
       <div class="text-center choose-card">Wryte your message</div>
       <div class="card-detail-container">
-        <div class="accordion" id="accordionExample">
-          <div class="card">
-            <div class="card-header card-dark-background" id="headingOne">
-              <h2 class="mb-0">
-                <button class="btn btn-link section-headers foucus-none" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                 Address Details
-                </button>
-              </h2>
-            </div>
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body">
-              </div>
-            </div>
-          </div>
+        <div class="accordion" id="accordionSecondPage">
           <div class="card">
             <div class="card-header card-dark-background" id="headingTwo">
               <h2 class="mb-0">
-                <button class="btn btn-link collapsed section-headers foucus-none" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Selected Card Details
+                <button class="btn btn-link collapsed section-headers foucus-none" type="button" data-toggle="collapse" data-target="#cardDetailSection" aria-expanded="false" aria-controls="cardDetailSection">
+                  Card Details
                 </button>
               </h2>
             </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div id="cardDetailSection" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSecondPage">
               <div class="card-body selected-card">
                 <div class="float-left selected-card-image">
                   <img class="selected-card-image pr-3" id="selected-card-img">
@@ -116,7 +103,7 @@
                 </button>
               </h2>
             </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSecondPage">
               <div class="card-body">
               </div>
             </div>
@@ -129,7 +116,20 @@
                 </button>
               </h2>
             </div>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSecondPage">
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header card-dark-background" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link section-headers foucus-none" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                 Address Details
+                </button>
+              </h2>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSecondPage">
               <div class="card-body">
               </div>
             </div>
