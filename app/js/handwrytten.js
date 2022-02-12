@@ -1,5 +1,77 @@
 var globalUid;
 var loader;
+
+function listCardCategories(uid) {
+  let options = {
+    url: 'https://api.handwrytten.com/v1/categories/list',
+    method: 'GET',
+    connection_link_name: "handwrytten",
+    url_query:
+    [
+      {
+        key: 'uid',
+        value: uid
+      }
+    ]
+  };
+  ZFAPPS.request(options).then(function(response) {
+    let body = JSON.parse(response.data.body);
+    let {categories} = body;
+    listCategoriesInDropdown(categories);
+  }).catch(function(err) {
+    console.log(err);
+  })
+}
+
+function listCategoriesInDropdown(categories) {
+  // <div class="form-check dropdown-item">
+  //    <label class="form-check-label" for="dropdownCheck">
+  //      Remember me
+  //    </label>
+  //  </div>
+  let dropDownContainer = document.querySelector(".category-dropdown-menu");
+  categories.forEach((category)=> {
+    let div = document.createElement("div");
+    div.classList.add('form-check', 'dropdown-item');
+    div.setAttribute('id', category.id);
+    div.onclick=function() {
+      let category = div.id;
+      loadSpecificCardCategory(category);
+    }
+    let label = document.createElement("label")
+    label.classList.add('form-check-label');
+    label.setAttribute('for', category.slug);
+    label.textContent=category.name;
+    div.appendChild(label);
+    dropDownContainer.appendChild(div);
+  });
+}
+
+function loadSpecificCardCategory(id) {
+  var options = {
+    url: `https://api.handwrytten.com/v1/cards/list?category_id=${id}`,
+    method: 'GET',
+    connection_link_name: "handwrytten",
+    url_query:
+    [
+      {
+        key: 'uid',
+        value: globalUid
+      }
+    ]
+  };
+  showLoadingIndicator(loader);
+  ZFAPPS.request(options).then(function (response) {
+    let body = JSON.parse(response.data.body);
+    let listOfCards = body.cards
+    constructCardTemplates(listOfCards);
+  }).catch(function (err) {
+    console.log(err);
+  }).finally(() => {
+    hideLoadingIndicator(loader);
+  });
+}
+
 function showLoadingIndicator(loader) {
   loader.classList.add("d-flex");
 }
@@ -52,7 +124,7 @@ function constructCardTemplates(cards) {
   for (var i = 0; i < cards.length; i++) {
     let card = cards[i];
     let listItem = document.createElement("div");
-    listItem.className = 'card';
+    listItem.setAttribute('class','card card-grid');
 
     let category = document.createElement("h6");
     category.className = 'card-title';
@@ -94,7 +166,7 @@ function constructCardTemplates(cards) {
 
       let toggleButton= document.createElement("a");
       toggleButton.setAttribute('href', `#card${i}`);
-      toggleButton.setAttribute('class','btn btn-info px-0 pb-3 toggle-desc');
+      toggleButton.setAttribute('class','btn section-headers foucus-none px-0 pb-3 toggle-desc');
       toggleButton.setAttribute('data-toggle','collapse');
       toggleButton.textContent = 'SHOW DESCRIPTION';
       cardBody.appendChild(toggleButton);
@@ -116,67 +188,35 @@ function constructCardTemplates(cards) {
     let button = document.createElement("a");
     button.classList.add('btn', 'btn-primary');
     button.textContent = 'SEND';
-    button.addEventListener('click',function(){sendCard()});
+    button.addEventListener('click',function(){
+      sendCard(card.id)
+    });
     listItem.appendChild(button);
     cardContainer.appendChild(listItem);
   }
 }
 
-function listCardCategories(uid) {
-  let options = {
-    url: 'https://api.handwrytten.com/v1/categories/list',
-    method: 'GET',
-    connection_link_name: "handwrytten",
-    url_query:
-    [
-      {
-        key: 'uid',
-        value: uid
-      }
-    ]
-  };
-  ZFAPPS.request(options).then(function(response) {
-    let body = JSON.parse(response.data.body);
-    let {categories} = body;
-    listCategoriesInDropdown(categories);
-  }).catch(function(err) {
-    console.log(err);
-  })
+function sendCard(cardId) {
+  let firstPage = document.getElementById("first-page");
+  let secondPage = document.getElementById("second-page")
+  if (firstPage.style.display === "none") {
+    firstPage.style.display = "block";
+  } else {
+    firstPage.style.display = "none";
+    secondPage.style.display = "block";
+  }
+  loadCardDetails(cardId);
+  loadFonts();
+  let button = document.createElement("button");
+  button.textContent = 'Use Templates';
+  button.addEventListener('click',function(){showTemplates()});
+  button.id = 'use_template';
+  document.body.appendChild(button);
 }
 
-function listCategoriesInDropdown(categories) {
-  // <div class="form-check dropdown-item">
-  //    <input type="checkbox" class="form-check-input" id="dropdownCheck">
-  //    <label class="form-check-label" for="dropdownCheck">
-  //      Remember me
-  //    </label>
-  //  </div>
-  let dropDownContainer = document.querySelector(".category-dropdown-menu");
-  categories.forEach((category)=> {
-    let div = document.createElement("div");
-    div.classList.add('form-check', 'dropdown-item');
-    let input = document.createElement("input");
-    input.setAttribute('type', 'checkbox');
-    input.setAttribute('id', category.id);
-    input.onclick=function() {
-      let category = input.id;
-      loadSpecificCardCategory(category)
-    }
-    input.classList.add('form-check-input');
-    
-    div.appendChild(input);
-    let label = document.createElement("label")
-    label.classList.add('form-check-label');
-    label.setAttribute('for', category.slug);
-    label.textContent=category.name;
-    div.appendChild(label);
-    dropDownContainer.appendChild(div);
-  });
-}
-
-function loadSpecificCardCategory(id) {
+function loadCardDetails(cardId) {
   var options = {
-    url: `https://api.handwrytten.com/v1/cards/list?category_id=${id}`,
+    url: `https://api.handwrytten.com/v1/cards/view?card_id=${cardId}`,
     method: 'GET',
     connection_link_name: "handwrytten",
     url_query:
@@ -187,31 +227,44 @@ function loadSpecificCardCategory(id) {
       }
     ]
   };
-  showLoadingIndicator(loader);
   ZFAPPS.request(options).then(function (response) {
     let body = JSON.parse(response.data.body);
-    let listOfCards = body.cards
-    constructCardTemplates(listOfCards);
+    console.log(body);
+    let selectedCard = body.card;
+    let img = document.getElementById("selected-card-img");
+    img.setAttribute('src', selectedCard.cover);
+    let category = document.getElementById("selected-card-category");
+    category.textContent=selectedCard.category_name;
+    let cardName = document.getElementById("selected-card-name");
+    cardName.textContent=selectedCard.name;
+    let cardPrice = document.getElementById("selected-card-price");
+    cardPrice.textContent=`$${selectedCard.price}`;
   }).catch(function (err) {
     console.log(err);
-  }).finally(() => {
-    hideLoadingIndicator(loader);
   });
 }
 
-function sendCard() {
-  var x = document.getElementById("card_container");
-  if (x.style.display === "none")
-  {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-  let button = document.createElement("button");
-  button.textContent = 'Use Templates';
-  button.addEventListener('click',function(){showTemplates()});
-  button.id = 'use_template';
-  document.body.appendChild(button);
+function loadFonts() {
+  var options = {
+    url: 'https://api.handwrytten.com/v1/fonts/list',
+    method: 'GET',
+    connection_link_name: "handwrytten",
+    url_query:
+    [
+      {
+        key: 'uid',
+        value: globalUid
+      }
+    ]
+  };
+  ZFAPPS.request(options).then(function (response) {
+    let body = JSON.parse(response.data.body);
+    console.log(body);
+    //let listOfTemplates = body.templates
+    //constructTemplates(listOfTemplates);
+  }).catch(function (err) {
+    console.log(err);
+  });
 }
 
 function showTemplates() {
@@ -241,7 +294,7 @@ function constructTemplates(listOfTemplates) {
   //      <p>Test 1</p>
   //      <button type="button">Click Me!</button>
   //   </div>
-  let templates = document.querySelector(".templates_list");
+  let templates = document.querySelector(".card-detail-container");
   for (var i = 0; i < listOfTemplates.length; i++) {
     let template = listOfTemplates[i];
 
