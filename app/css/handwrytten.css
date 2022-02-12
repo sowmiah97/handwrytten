@@ -2,3 +2,48 @@
     width: 13rem;
     margin: 10px;
 }
+
+.card:hover {
+  background-color: Thistle;
+}
+
+.templates {
+  margin-bottom: 20px;
+  background: white;
+  border: 1px solid rgba(74, 74, 74, 0.075);
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  color: #204056;
+  font-size: 18px;
+  font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+}
+
+#menu, .templates p {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+}
+
+ .card-image {
+        position: relative;
+    }
+    .card-image .img-top {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .card-image:hover .img-top {
+        display: block;
+    }
+
+
+.btn .btn-info{
+       color: black;
+}
