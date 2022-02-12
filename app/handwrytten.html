@@ -45,30 +45,97 @@
           console.log(err);
         });
       });
-      document.getElementsByTagName('input').onclick = function(){
-        var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
-        console.log(markedCheckbox);
-      };
     };
     </script>
   </head>
   <body>
-    <div class="text-center choose-card">Choose a card</div>
-    <div class="card-filter-container">
-      <div class="dropdown">
-        <button class="btn btn-outline card-btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">CATEGORIES</button>
-        <div class="dropdown-menu category-dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <div id="first-page">
+      <div class="text-center choose-card">Choose a card</div>
+      <div class="card-dark-background">
+        <div class="dropdown">
+          <button class="btn btn-outline card-category-btn foucus-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">CATEGORIES</button>
+          <div class="dropdown-menu category-dropdown-menu" aria-labelledby="dropdownMenuButton">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="justify-content-center mt-5 loading-indicator d-none">
-      <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+      <div class="justify-content-center mt-5 loading-indicator d-none">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="card-container row m-0 py-4 justify-content-center" id="card_container">
       </div>
     </div>
-    <div class="card-container row m-0 py-4 justify-content-center" id="card_container">
-    </div>
-    <div class="templates_list">
+    <div id="second-page" style="display: none;">
+      <div class="text-center choose-card">Wryte your message</div>
+      <div class="card-detail-container">
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header card-dark-background" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link section-headers foucus-none" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                 Address Details
+                </button>
+              </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header card-dark-background" id="headingTwo">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed section-headers foucus-none" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Selected Card Details
+                </button>
+              </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body selected-card">
+                <div class="float-left selected-card-image">
+                  <img class="selected-card-image pr-3" id="selected-card-img">
+                </div>
+                <div class="content_info_card right">
+                  <div class="main_info_card">
+                    <h2 class="card-title">CATEGORY<span class="card-category" id="selected-card-category"></span></h2>
+                    <div class="clearfix">
+                      <h3 class="float-left card-name" id="selected-card-name"></h3>
+                      <h4 class="float-right card-price" style="border: none;" id="selected-card-price"></h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header card-dark-background" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed section-headers foucus-none" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Choose Wryting Style
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header card-dark-background" id="headingFour">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed section-headers foucus-none" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  Wryte Message
+                </button>
+              </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
