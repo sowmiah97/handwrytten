@@ -7,9 +7,9 @@
     "modules": {
       "widgets": [
         {
-          "location": "customer.creation.sidebar",
+          "location": "customer.details.button",
           "widget_type": "modal",
-          "name": "Handwrytten Extension",
+          "name": "Send Handwrytten Notes",
           "url": "/app/handwrytten.html",
           "logo": "/app/img/handwrytten.png"
         }

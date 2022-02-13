@@ -1,6 +1,9 @@
 body, .card-body {
     background-color: #F0F0EB !important;
 }
+.card-header {
+    padding: 0px !important;
+}
 .foucus-none:focus{
     box-shadow: none !important;
 }
@@ -106,6 +109,20 @@ body, .card-body {
     position: absolute;
     top: 0;
     left: 0;
+}
+.back-button {
+    left: 0;
+    z-index: 150;
+    color:black;
+    text-decoration: none;
+    text-align: center;
+}
+.back-button:hover {
+    text-decoration: none;
+}
+.font-preview-dropdown {
+    height: 200px;
+    overflow-y: auto;
 }
 .section-headers {
     color: black !important;

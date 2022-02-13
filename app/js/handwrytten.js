@@ -30,11 +30,13 @@ function listCategoriesInDropdown(categories) {
   //    </label>
   //  </div>
   let dropDownContainer = document.querySelector(".category-dropdown-menu");
-  categories.forEach((category)=> {
+  categories.forEach((category = {})=> {
     let div = document.createElement("div");
     div.classList.add('form-check', 'dropdown-item');
     div.setAttribute('id', category.id);
     div.onclick=function() {
+      let dropDownLabel = document.querySelector(".card-category-btn");
+      dropDownLabel.textContent=div.innerText;
       let category = div.id;
       loadSpecificCardCategory(category);
     }
@@ -48,6 +50,7 @@ function listCategoriesInDropdown(categories) {
 }
 
 function loadSpecificCardCategory(id) {
+ 
   var options = {
     url: `https://api.handwrytten.com/v1/cards/list?category_id=${id}`,
     method: 'GET',
@@ -82,7 +85,7 @@ function hideLoadingIndicator(loader) {
 
 function listCards(uid) {
   globalUid = uid;
-  loader = document.getElementsByClassName("loading-indicator")[0];
+  loader = document.querySelector(".loading-indicator");
   showLoadingIndicator(loader);
   let options = {
     url: 'https://api.handwrytten.com/v1/cards/list',
@@ -223,6 +226,8 @@ function loadCardDetails(cardId) {
       }
     ]
   };
+  let loader = document.querySelector('.loading-indicator-2');
+  showLoadingIndicator(loader);
   ZFAPPS.request(options).then(function (response) {
     let body = JSON.parse(response.data.body);
     let selectedCard = body.card;
@@ -230,12 +235,20 @@ function loadCardDetails(cardId) {
     img.setAttribute('src', selectedCard.cover);
     let category = document.getElementById("selected-card-category");
     category.textContent=selectedCard.category_name;
+    let orientation = document.getElementById("selected-card-orientation");
+    orientation.textContent=selectedCard.orientation === 'P' ? 'Potrait' : 'Landscape';
     let cardName = document.getElementById("selected-card-name");
     cardName.textContent=selectedCard.name;
     let cardPrice = document.getElementById("selected-card-price");
     cardPrice.textContent=`$${selectedCard.price}`;
+    let cardDesc = document.getElementById("selected-card-desc");
+    cardDesc.textContent=selectedCard.description;
   }).catch(function (err) {
     console.log(err);
+  }).finally(() => {
+    hideLoadingIndicator(loader);
+    let cardDetailSection = document.querySelector(".card-detail-section");
+    cardDetailSection.classList.remove("d-none");
   });
 }
 
@@ -254,11 +267,32 @@ function loadFonts() {
   };
   ZFAPPS.request(options).then(function (response) {
     let body = JSON.parse(response.data.body);
-    //let listOfTemplates = body.templates
-    //constructTemplates(listOfTemplates);
+    let fontsArray = body.fonts;
+    let dropDownContainer = document.querySelector(".font-preview-dropdown");
+    fontsArray.forEach((font)=> {
+      let div = document.createElement("div");
+      div.classList.add('form-check', 'dropdown-item');
+      div.setAttribute('id', font.id);
+      div.onclick=function() {
+        let dropDownLabel = document.querySelector(".wryting-label");
+        dropDownLabel.textContent=font.label;
+        loadSpecificFont(font);
+      }
+      let label = document.createElement("label")
+      label.classList.add('form-check-label');
+      label.setAttribute('for', font.id);
+      label.textContent=font.label;
+      div.appendChild(label);
+      dropDownContainer.appendChild(div);
+    });
   }).catch(function (err) {
     console.log(err);
   });
+}
+function loadSpecificFont(font) {
+  let img = document.querySelector("#selected-font-img");
+  img.style.height="240px";
+  img.setAttribute('src', font.image);
 }
 
 function showTemplates() {
