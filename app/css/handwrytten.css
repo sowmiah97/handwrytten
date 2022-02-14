@@ -113,3 +113,40 @@ body, .card-body {
 .selected-card-image {
     height: 150px;
 }
+
+.template-dropdown-menu {
+    background-color: #F0F0EB !important;
+    margin-top: 0 !important;
+    max-height: 300px;
+    overflow: auto;
+}
+.template-dropdown-list {
+    display: block;
+    text-align: left;
+    white-space: nowrap;
+    padding: 6px 10px;
+}
+
+.msg-body{
+    height : 400px;
+}
+
+.message-box {
+    width: 200px;
+    height: 200px;
+}
+
+.template_dropdown
+{
+  display:none;
+  text-align: center;
+}
+
+.button-style {
+    border: #b6b6a1 !important;;
+    background: #b6b6a1 !important;;
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+}
