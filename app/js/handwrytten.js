@@ -24,11 +24,6 @@ function listCardCategories(uid) {
 }
 
 function listCategoriesInDropdown(categories) {
-  // <div class="form-check dropdown-item">
-  //    <label class="form-check-label" for="dropdownCheck">
-  //      Remember me
-  //    </label>
-  //  </div>
   let dropDownContainer = document.querySelector(".category-dropdown-menu");
   categories.forEach((category = {})=> {
     let div = document.createElement("div");
@@ -111,17 +106,6 @@ function listCards(uid) {
 }
 
 function constructCardTemplates(cards) {
-  // Constructing Bootstarp card view
-  //   <div class="card" style="width: 18rem;">
-  //   <h3>This is heading 3</h3>
-  //   <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-  //   <div class="card-body">
-  //     <h5 class="card-title">Card title</h5>
-            //<hr>
-  //     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  //     <a href="#" class="btn btn-primary">Go somewhere</a>
-  //   </div>
-  //  </div>
   let cardContainer = document.querySelector(".card-container");
   cardContainer.innerHTML="";
   for (var i = 0; i < cards.length; i++) {
@@ -137,11 +121,6 @@ function constructCardTemplates(cards) {
     categorySpan.textContent=card.category_name;
     category.appendChild(categorySpan);
     listItem.appendChild(category);
-
-    // <div class="card">
-    //   <img src="/examples/images/card-back.jpg" alt="Card Back">
-    //   <img src="/examples/images/card-front.jpg" class="img-top" alt="Card Front">
-    //  </div>
 
     let imageDisplay = document.createElement("div");
     imageDisplay.className = 'card-image';
@@ -319,6 +298,7 @@ function showTemplates() {
 
 function listTemplatesInDropdown(listOfTemplates) {
   let dropDownContainer = document.querySelector(".template-dropdown-menu");
+  dropDownContainer.innerHTML="";
   listOfTemplates.forEach((template)=> {
     let div = document.createElement("div");
     div.classList.add('form-check', 'dropdown-item');
@@ -337,85 +317,71 @@ function listTemplatesInDropdown(listOfTemplates) {
   });
 }
 
-function showTemplateSection()
-{
+function showTemplateSection() {
   let template_dropdown = document.getElementById('template_dropdown');
-  if (template_dropdown.style.display === "none") {
-      template_dropdown.style.display = "block";
-    } else {
-      template_dropdown.style.display = "none";
-    }
+  template_dropdown.style.display = "block";
+  let nameBox = document.getElementById("template-name");
+  nameBox.style.display = "none";
 }
 
-function setPreview(template)
-{
-  let previewBox = document.querySelector(".template_preview_box");
-  let previewBoxDiv = document.querySelector(".template_preview");
-  previewBoxDiv.style.display = "block";
+function setPreview(template) {
+  let previewBox = document.querySelector("#template_preview_box");
   previewBox.value = template.message;
-
   let button = document.getElementById("choose-btn");
   button.onclick=function() {
-       populateMsg(template);
-     }
-
-  let cancelButton = document.getElementById("cancel-btn");
-    cancelButton.onclick=function() {
-         cancelTemplate(template);
-       }
+    populateMsg(template);
+  }
 }
 
-function populateMsg(template)
-{
-  let msgBox = document.querySelector(".message-box");
+function populateMsg(template) {
+  let msgBox = document.querySelector(".message-preview-box");
   msgBox.value = template.message;
 }
 
-function cancelTemplate(template)
-{
-  let msgBox = document.querySelector(".message-box");
-  msgBox.value = '';
-
+function cancelTemplate() {
+  let previewBox = document.querySelector("#template_preview_box");
+  previewBox.value = '';
   let template_dropdown = document.getElementById('template_dropdown');
   template_dropdown.style.display = "none";
 }
-
-function saveTemplate()
-{
-  let message = document.getElementById('msg');
+function createNewTemplate() {
   let nameBox = document.getElementById("template-name");
   nameBox.style.display = "block";
-  let name = document.getElementById("name-box");
+  let template_dropdown = document.getElementById('template_dropdown');
+  template_dropdown.style.display = "none";
   let button = document.getElementById("save-btn");
   button.style.display = "block";
-  button.onclick=function() {
-         console.log(message.value);
-         console.log(name.value);
+}
 
-         var options = {
-             url: 'https://api.handwrytten.com/v1/templates/create',
-             method: 'POST',
-             connection_link_name: "handwrytten",
-             url_query:
-             [
-               {
-                 key: 'uid',
-                 value: globalUid
-               },
-               {
-                 key: 'name',
-                 value: name.value
-               },
-               {
-                 key: 'message',
-                 value: message.value
-               }
-             ]
-           };
-           ZFAPPS.request(options).then(function (response) {
-             let body = JSON.parse(response.data.body);
-           }).catch(function (err) {
-             console.log(err);
-           });
-   }
+function saveNewTemplate() {
+  let name = document.getElementById('name-box');
+  let message = document.getElementById('template_preview_box');
+  var options = {
+    url: 'https://api.handwrytten.com/v1/templates/create',
+    method: 'POST',
+    connection_link_name: "handwrytten",
+    url_query: [
+      {
+        key: 'uid',
+        value: globalUid
+      },
+      {
+        key: 'name',
+        value: name.value
+      },
+      {
+        key: 'message',
+        value: message.value
+      }
+    ]
+  };
+  ZFAPPS.request(options).then(function() {
+    let nameBox = document.getElementById("template-name");
+    nameBox.style.display = "none";
+    let template_dropdown = document.getElementById('template_dropdown');
+    template_dropdown.style.display = "block";
+    showTemplates();
+  }).catch(function (err) {
+    console.log(err);
+  });
 }

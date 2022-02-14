@@ -131,7 +131,7 @@
               <div class="card-body" style="height: 300px;">
                 <div class="float-left">
                   <div class="dropdown">
-                    <h5>Preview</h5>
+                    <h6>Preview</h6>
                     <button class="wryting-label btn btn-outline foucus-none dropdown-toggle text-muted pl-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">Choose Wryting Style</button>
                     <div class="dropdown-menu font-preview-dropdown" aria-labelledby="dropdownMenuButton">
                     </div>
@@ -152,29 +152,36 @@
               </h2>
             </div>
             <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSecondPage">
-              <div class="msg-body">
-                <button class="btn button-style" data-inline="true" onclick="showTemplateSection()">Load message from Template</button>
-                <button class="btn button-style" data-inline="true" onclick="saveTemplate()">Save message as Template</button>
-                <div class="dropdown template_dropdown" id="template_dropdown">Templates
-                  <button class="template-label btn btn-outline card-category-btn focus-none dropdown-toggle" type="button" id="templatesDropdown" data-toggle="dropdown" aria-expanded="false">Select template</button>
-                  <div class="dropdown-menu template-dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <div class="msg-body card-body">
+                <div class="msg-box" id="msg-box">
+                  <div class="float-left">
+                    <textarea name="message" rows="10" id="template_preview_box" class="message-preview-box p-2" placeholder="Wryte your message here…"></textarea>
+                    <div class="mt-2">
+                      <button class="btn btn-primary btn-outline btn-sm" data-inline="true" onclick="showTemplateSection()">Use Templates</button>
+                      <button class="btn btn-primary btn-sm" data-inline="true" onclick="createNewTemplate()">Create New Template</button>
+                    </div>
                   </div>
-                  <div class="template_preview" id="template_preview" style="text-align:center; display:none;">
-                    <label>Template preview:</label>
-                    <input class="template_preview_box">
+                  <div class="float-right">
+                    <div class="template-name mr-5" id="template-name" style="display: none;">
+                      <h6>Enter a name for the template</h6>
+                      <input type="text" id="name-box" class="name-box p-2">
+                      <button class="btn btn-primary btn-sm mt-2" id="save-btn" onclick="saveNewTemplate()">Save</button>
+                    </div>
+                    <div class="dropdown template_dropdown" style="display: none;" id="template_dropdown">
+                      <div class="row mr-0">
+                        <h6>Choose from templates</h6>
+                      </div>
+                      <div class="row mr-5">
+                        <button class="template-label btn btn-outline card-category-btn focus-none dropdown-toggle mr-4" type="button" data-toggle="dropdown" aria-expanded="false">Select template</button>
+                        <div class="dropdown-menu template-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        </div>
+                        <div>
+                          <button class="btn btn-primary btn-sm" id="cancel-btn" onclick="cancelTemplate()">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <button class="btn button-style" id="choose-btn">Choose</button>
-                  <button class="btn button-style" id="cancel-btn">Cancel</button>
                 </div>
-                <div class="msg-box" id="msg-box" style="text-align: center;">
-                  <label for="msg">Message: </label>
-                  <input type="text" id="msg" class="message-box">
-                </div>
-                <div class="template-name" id="template-name" style="text-align:center; display:none;">
-                  <label for="name-box">Name: </label>
-                  <input type="text" id="name-box" class="name-box">
-                </div>
-                <button class="btn button-style" id="save-btn" style="text-align:center; display:none;">Save</button>
               </div>
             </div>
           </div>
@@ -193,6 +200,8 @@
           </div>
         </div>
       </div>
+    </div>
+    <div id="third-page" style="display: none;">
     </div>
   </body>
 </html>
