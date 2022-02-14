@@ -1,6 +1,9 @@
 body, .card-body {
     background-color: #F0F0EB !important;
 }
+.card-header {
+    padding: 0px !important;
+}
 .foucus-none:focus{
     box-shadow: none !important;
 }
@@ -38,7 +41,14 @@ body, .card-body {
     padding: 20px;
 }
 .card-grid:hover {
-    background-color: #b6b6a1;
+    background-color: #403641;
+    color: white;
+}
+.card-grid:hover .card-category {
+    color: #FF6C52;
+}
+.card-grid:hover .section-headers {
+    color: white !important;
 }
 .card-title {
     font-size: 12px;
@@ -48,6 +58,7 @@ body, .card-body {
     padding-left: 5px;
     font-size: 15px;
     font-weight: 500;
+    text-transform: uppercase;
 }
 .card-name {
     font-size: 16px;
@@ -64,9 +75,9 @@ body, .card-body {
 
 }
 .toggle-desc {
-    font-size: 13px !important;
+    font-size: 11px !important;
     background-color:transparent !important;
-    color:black !important;
+    color:black;
     outline:none;
     border:none !important;
 }
@@ -77,9 +88,9 @@ body, .card-body {
 .card .btn-primary:hover {
     background: #00B3B3;
     border-color: #00B3B3;
-    transform: scale(0.8);
+    /* transform: scale(0.8); */
 }
-.card .btn-primary:active {
+.card .btn-primary:active,  .btn-primary:focus{
     box-shadow: none !important;
     outline: none !important;
     background: #00B3B3 !important;
@@ -107,6 +118,20 @@ body, .card-body {
     top: 0;
     left: 0;
 }
+.back-button {
+    left: 0;
+    z-index: 150;
+    color:black;
+    text-decoration: none;
+    text-align: center;
+}
+.back-button:hover {
+    text-decoration: none;
+}
+.font-preview-dropdown {
+    height: 200px;
+    overflow-y: auto;
+}
 .section-headers {
     color: black !important;
 }
@@ -130,23 +155,21 @@ body, .card-body {
 .msg-body{
     height : 400px;
 }
-
-.message-box {
-    width: 200px;
-    height: 200px;
+.msg-box {
+    box-shadow: 0 8px 16px 0 rgb(0 0 0 / 20%);
+    background-color: #fff;
+    padding: 20px;
+    height: 350px;
 }
-
-.template_dropdown
-{
-  display:none;
-  text-align: center;
+.message-preview-box {
+    border: 2px dashed #d6d3d6;
+    display: inline-block;
+    position: relative;
+    width: 500px;
+    height: 250px;
 }
-
-.button-style {
-    border: #b6b6a1 !important;;
-    background: #b6b6a1 !important;;
-    padding: 10px 20px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    border-radius: 12px;
+.template-label {
+    width: 250px;
+    border: 1px solid#ccc !important;
+    font-size: 14px !important;
 }
