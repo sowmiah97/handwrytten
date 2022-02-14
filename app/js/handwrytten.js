@@ -207,11 +207,7 @@ function sendCard(cardId) {
   }
   loadCardDetails(cardId);
   loadFonts();
-  let button = document.createElement("button");
-  button.textContent = 'Use Templates';
-  button.addEventListener('click',function(){showTemplates()});
-  button.id = 'use_template';
-  document.body.appendChild(button);
+  showTemplates();
 }
 
 function loadCardDetails(cardId) {
@@ -229,7 +225,6 @@ function loadCardDetails(cardId) {
   };
   ZFAPPS.request(options).then(function (response) {
     let body = JSON.parse(response.data.body);
-    console.log(body);
     let selectedCard = body.card;
     let img = document.getElementById("selected-card-img");
     img.setAttribute('src', selectedCard.cover);
@@ -259,7 +254,6 @@ function loadFonts() {
   };
   ZFAPPS.request(options).then(function (response) {
     let body = JSON.parse(response.data.body);
-    console.log(body);
     //let listOfTemplates = body.templates
     //constructTemplates(listOfTemplates);
   }).catch(function (err) {
@@ -282,34 +276,112 @@ function showTemplates() {
   };
   ZFAPPS.request(options).then(function (response) {
     let body = JSON.parse(response.data.body);
-    let listOfTemplates = body.templates
-    constructTemplates(listOfTemplates);
+    let listOfTemplates = body.templates;
+    listTemplatesInDropdown(listOfTemplates);
   }).catch(function (err) {
     console.log(err);
   });
 }
 
-function constructTemplates(listOfTemplates) {
-  //  <div class="templates">
-  //      <p>Test 1</p>
-  //      <button type="button">Click Me!</button>
-  //   </div>
-  let templates = document.querySelector(".card-detail-container");
-  for (var i = 0; i < listOfTemplates.length; i++) {
-    let template = listOfTemplates[i];
-
-    let listItem = document.createElement("div");
-    listItem.className = 'templates';
-    if(template.name) {
-      let templateName = document.createElement("p");
-      templateName.textContent = template.name;
-      listItem.appendChild(templateName);
+function listTemplatesInDropdown(listOfTemplates) {
+  let dropDownContainer = document.querySelector(".template-dropdown-menu");
+  listOfTemplates.forEach((template)=> {
+    let div = document.createElement("div");
+    div.classList.add('form-check', 'dropdown-item');
+    div.setAttribute('id', template.id);
+    div.onclick=function() {
+      let templateLabel = document.querySelector(".template-label");
+      templateLabel.textContent=template.name;
+      setPreview(template);
     }
-    let button = document.createElement("button");
-    button.textContent = 'Choose';
-    listItem.appendChild(button);
-    templates.appendChild(listItem);
-  }
-  var x = document.getElementById("use_template");
-  x.style.display = "none";
+    let label = document.createElement("label")
+    label.classList.add('form-check-label');
+    label.setAttribute('for', template.name);
+    label.textContent=template.name;
+    div.appendChild(label);
+    dropDownContainer.appendChild(div);
+  });
+}
+
+function showTemplateSection()
+{
+  let template_dropdown = document.getElementById('template_dropdown');
+  if (template_dropdown.style.display === "none") {
+      template_dropdown.style.display = "block";
+    } else {
+      template_dropdown.style.display = "none";
+    }
+}
+
+function setPreview(template)
+{
+  let previewBox = document.querySelector(".template_preview_box");
+  let previewBoxDiv = document.querySelector(".template_preview");
+  previewBoxDiv.style.display = "block";
+  previewBox.value = template.message;
+
+  let button = document.getElementById("choose-btn");
+  button.onclick=function() {
+       populateMsg(template);
+     }
+
+  let cancelButton = document.getElementById("cancel-btn");
+    cancelButton.onclick=function() {
+         cancelTemplate(template);
+       }
+}
+
+function populateMsg(template)
+{
+  let msgBox = document.querySelector(".message-box");
+  msgBox.value = template.message;
+}
+
+function cancelTemplate(template)
+{
+  let msgBox = document.querySelector(".message-box");
+  msgBox.value = '';
+
+  let template_dropdown = document.getElementById('template_dropdown');
+  template_dropdown.style.display = "none";
+}
+
+function saveTemplate()
+{
+  let message = document.getElementById('msg');
+  let nameBox = document.getElementById("template-name");
+  nameBox.style.display = "block";
+  let name = document.getElementById("name-box");
+  let button = document.getElementById("save-btn");
+  button.style.display = "block";
+  button.onclick=function() {
+         console.log(message.value);
+         console.log(name.value);
+
+         var options = {
+             url: 'https://api.handwrytten.com/v1/templates/create',
+             method: 'POST',
+             connection_link_name: "handwrytten",
+             url_query:
+             [
+               {
+                 key: 'uid',
+                 value: globalUid
+               },
+               {
+                 key: 'name',
+                 value: name.value
+               },
+               {
+                 key: 'message',
+                 value: message.value
+               }
+             ]
+           };
+           ZFAPPS.request(options).then(function (response) {
+             let body = JSON.parse(response.data.body);
+           }).catch(function (err) {
+             console.log(err);
+           });
+   }
 }

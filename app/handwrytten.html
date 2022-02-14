@@ -117,7 +117,29 @@
               </h2>
             </div>
             <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSecondPage">
-              <div class="card-body">
+              <div class="msg-body">
+                <button class="btn button-style" data-inline="true" onclick="showTemplateSection()">Load message from Template</button>
+                <button class="btn button-style" data-inline="true" onclick="saveTemplate()">Save message as Template</button>
+                <div class="dropdown template_dropdown" id="template_dropdown">Templates
+                  <button class="template-label btn btn-outline card-category-btn focus-none dropdown-toggle" type="button" id="templatesDropdown" data-toggle="dropdown" aria-expanded="false">Select template</button>
+                  <div class="dropdown-menu template-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  </div>
+                  <div class="template_preview" id="template_preview" style="text-align:center; display:none;">
+                    <label>Template preview:</label>
+                    <input class="template_preview_box">
+                  </div>
+                  <button class="btn button-style" id="choose-btn">Choose</button>
+                  <button class="btn button-style" id="cancel-btn">Cancel</button>
+                </div>
+                <div class="msg-box" id="msg-box" style="text-align: center;">
+                  <label for="msg">Message: </label>
+                  <input type="text" id="msg" class="message-box">
+                </div>
+                <div class="template-name" id="template-name" style="text-align:center; display:none;">
+                  <label for="name-box">Name: </label>
+                  <input type="text" id="name-box" class="name-box">
+                </div>
+                <button class="btn button-style" id="save-btn" style="text-align:center; display:none;">Save</button>
               </div>
             </div>
           </div>
