@@ -366,10 +366,21 @@
           </button>
         </h2>
       </div>
-      <div id="pay-and-send" class="collapse">
-        <div class="card-body p-5" style="height: 550px;">
+      <div id="pay-and-send" class="collapse card">
+        <div class="card-body p-5 align-center" style="height: 300px; text-align: center;">
+          <div class="dropdown card_dropdown" id="credit_card_dropdown">
+            <div>
+              <h6>Choose Credit Card</h6>
+            </div>
+            <div>
+              <button class="credit_card_label template-label btn btn-outline card-category-btn focus-none dropdown-toggle mr-4" type="button" data-toggle="dropdown" aria-expanded="false">--None--</button>
+              <div class="dropdown-menu card-dropdown-menu" aria-labelledby="dropdownMenuButton">
+              </div>
+            </div>
+          </div>
+          <div class="selected-card-id" id="selected-card-id" style="display: none;"></div>
+          <button class="btn btn-primary mt-4" onclick="sendSelectedCard()" >Send</button>
         </div>
-      <div>
-    </div>
+      </div>
   </body>
 </html>

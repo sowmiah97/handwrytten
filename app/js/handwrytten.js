@@ -387,6 +387,8 @@ function setContentsInPreviewpage(selectedCard) {
   cardName.textContent=selectedCard.name;
   let cardPrice = document.getElementById("selected-card-price-preview");
   cardPrice.textContent=`$${selectedCard.price}`;
+  let cardId = document.getElementById("selected-card-id");
+  cardId.textContent=selectedCard.id;
 }
 function goToSecondPage() {
   let firstPage = document.getElementById("first-page");
@@ -425,4 +427,176 @@ function proceedToPay() {
       receipientAddressPreview.textContent=address;
     }
   }
+  listCreditCards();
+}
+
+function listCreditCards() {
+  let options = {
+    url: 'https://api.handwrytten.com/v1/creditCards/list',
+    method: 'GET',
+    connection_link_name: "handwrytten",
+    url_query:
+    [
+      {
+        key: 'uid',
+        value: globalUid
+      }
+    ]
+  };
+  ZFAPPS.request(options).then(function(response) {
+    let body = JSON.parse(response.data.body);
+    let cards = body.credit_cards;
+    listCreditCardsInDropdown(cards);
+  }).catch(function(err) {
+    console.log(err);
+  });
+}
+
+function listCreditCardsInDropdown(cards) {
+  let dropDownContainer = document.querySelector(".card-dropdown-menu");
+  dropDownContainer.innerHtml="";
+  cards.forEach((card = {})=> {
+    let div = document.createElement("div");
+    div.classList.add('form-check', 'dropdown-item');
+    div.setAttribute('id', card.id);
+    div.onclick=function() {
+      let dropDownLabel = document.querySelector(".credit_card_label");
+      dropDownLabel.textContent=card.card_number;
+      dropDownLabel.setAttribute('id', card.id);
+    }
+    let label = document.createElement("label")
+    label.classList.add('form-check-label');
+    label.setAttribute('for', card.card_number);
+    label.textContent=card.card_number;
+    div.appendChild(label);
+    dropDownContainer.appendChild(div);
+  });
+}
+
+function sendSelectedCard()
+{
+    let cardId = document.getElementById("selected-card-id");
+    console.log(cardId.textContent);
+
+    let creditCard = document.querySelector(".credit_card_label");
+    let creditCardId = creditCard.id;
+    console.log(creditCard.id);
+
+    let previewFont = document.querySelector('#wryting-style-preview');
+    let font = previewFont.textContent;
+    console.log(previewFont.textContent);
+
+    let msgPreview = document.getElementById("message-preview");
+    let message = msgPreview.textContent;
+    console.log(msgPreview.textContent);
+
+    let senderName = document.getElementById("name").value;
+    console.log(senderName);
+    let senderStreet = document.getElementById("street").value;
+    console.log(senderStreet);
+    let senderCity = document.getElementById("city").value;
+    let senderState = document.getElementById("state").value;
+    let senderCountry = document.getElementById("country").value;
+    let senderZip = document.getElementById("zip").value;
+    let senderPhone = document.getElementById("phone").value;
+
+    let RecipientName = document.getElementById("rec-name").value;
+    console.log(RecipientName);
+    let RecipientStreet = document.getElementById("rec-street").value;
+    console.log(RecipientStreet);
+    let RecipientCity = document.getElementById("rec-city").value;
+    let RecipientState = document.getElementById("rec-state").value;
+    let RecipientCountry = document.getElementById("rec-country").value;
+    let RecipientZip = document.getElementById("rec-zip").value;
+    let RecipientPhone = document.getElementById("rec-phone").value;
+
+    let options = {
+        url: 'https://api.handwrytten.com/v1/orders/singleStepOrder',
+        method: 'GET',
+        connection_link_name: "handwrytten",
+        url_query:
+        [
+          {
+            key: 'login',
+            value: 'bmsowmi97@gmail.com'
+          },
+          {
+            key: 'password',
+            value: 'Sowmiah@13'
+          },
+          {
+            key: 'card_id',
+            value: cardId.textContent
+          },
+          {
+            key: 'message',
+            value: message
+          },
+          {
+            key: 'font_label',
+            value: font
+          },
+          {
+            key: 'credit_card_id',
+            value: creditCardId
+          },
+          {
+            key: 'validate_address',
+            value: false
+          },
+          {
+            key: 'sender_name',
+            value: senderName
+          },
+          {
+            key: 'sender_address1',
+            value: senderStreet
+          },
+          {
+            key: 'sender_city',
+            value: senderCity
+          },
+          {
+            key: 'sender_zip',
+            value: senderZip
+          },
+          {
+            key: 'sender_state',
+            value: senderState
+          },
+          {
+            key: 'sender_country',
+            value: senderCountry
+          },
+          {
+            key: 'recipient_name',
+            value: RecipientName
+          },
+          {
+            key: 'recipient_address1',
+            value: RecipientStreet
+          },
+          {
+            key: 'recipient_city',
+            value: RecipientCity
+          },
+          {
+            key: 'recipient_zip',
+            value: RecipientZip
+          },
+          {
+            key: 'recipient_state',
+            value: RecipientState
+          },
+          {
+            key: 'recipient_country',
+            value: RecipientCountry
+          }
+        ]
+      };
+      ZFAPPS.request(options).then(function(response) {
+        let body = JSON.parse(response.data.body);
+      }).catch(function(err) {
+        console.log(err);
+      });
 }
