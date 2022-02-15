@@ -205,3 +205,16 @@ body, .card-body {
     background-color: #fff;
     margin-left: 2px
 }
+
+.card-dropdown-menu {
+    background-color: #F0F0EB !important;
+    margin-top: 0 !important;
+    max-height: 300px;
+    overflow: auto;
+}
+.card-dropdown-list {
+    display: block;
+    text-align: left;
+    white-space: nowrap;
+    padding: 6px 10px;
+}
