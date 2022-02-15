@@ -222,6 +222,7 @@ function loadCardDetails(cardId) {
     cardPrice.textContent=`$${selectedCard.price}`;
     let cardDesc = document.getElementById("selected-card-desc");
     cardDesc.textContent=selectedCard.description;
+    setContentsInPreviewpage(selectedCard);
   }).catch(function (err) {
     console.log(err);
   }).finally(() => {
@@ -272,6 +273,9 @@ function loadSpecificFont(font) {
   let img = document.querySelector("#selected-font-img");
   img.style.height="240px";
   img.setAttribute('src', font.image);
+  // Setting up for preview page
+  let previewFont = document.querySelector('#wryting-style-preview');
+  previewFont.textContent=font.label;
 }
 
 function showTemplates() {
@@ -327,15 +331,6 @@ function showTemplateSection() {
 function setPreview(template) {
   let previewBox = document.querySelector("#template_preview_box");
   previewBox.value = template.message;
-  let button = document.getElementById("choose-btn");
-  button.onclick=function() {
-    populateMsg(template);
-  }
-}
-
-function populateMsg(template) {
-  let msgBox = document.querySelector(".message-preview-box");
-  msgBox.value = template.message;
 }
 
 function cancelTemplate() {
@@ -384,4 +379,50 @@ function saveNewTemplate() {
   }).catch(function (err) {
     console.log(err);
   });
+}
+function setContentsInPreviewpage(selectedCard) {
+  let img = document.getElementById("selected-card-img-preview");
+  img.setAttribute('src', selectedCard.cover);
+  let cardName = document.getElementById("selected-card-name-preview");
+  cardName.textContent=selectedCard.name;
+  let cardPrice = document.getElementById("selected-card-price-preview");
+  cardPrice.textContent=`$${selectedCard.price}`;
+}
+function goToSecondPage() {
+  let firstPage = document.getElementById("first-page");
+  let secondPage = document.getElementById("second-page");
+  let thirdPage = document.getElementById("third-page");
+  firstPage.style.display = "none";
+  secondPage.style.display = "block";
+  thirdPage.style.display="none";
+}
+function proceedToPay() {
+  let firstPage = document.getElementById("first-page");
+  let secondPage = document.getElementById("second-page");
+  let thirdPage = document.getElementById("third-page");
+  firstPage.style.display = "none";
+  secondPage.style.display = "none";
+  thirdPage.style.display="block";
+  // Set up message preview
+  let msgPreview = document.getElementById("message-preview");
+  let previewBox = document.querySelector("#template_preview_box");
+  msgPreview.textContent = previewBox.value;
+  // Set up Address preivew
+  let forms = document.forms;
+  linebreak = document.createElement("br");
+  for( let i=0; i<document.forms.length; i++ )
+  {
+    let form = forms[i];
+    let address = '';
+    Array.from(form.elements).forEach((input) => {
+      address = address+input.value+"\n";
+    });
+    if(i === 0) {
+      let senderAddressPreview = document.getElementById("s-address");
+      senderAddressPreview.textContent=address;
+    } else  {
+      let receipientAddressPreview = document.getElementById("r-address");
+      receipientAddressPreview.textContent=address;
+    }
+  }
 }

@@ -102,7 +102,7 @@
                 </div>
                 <div class="card-detail-section d-none">
                   <div class="float-left selected-card-image">
-                    <img class="selected-card-image pr-3" id="selected-card-img">
+                    <img class="selected-card-image mr-3 card-cover" id="selected-card-img">
                   </div>
                   <div class="content_info_card right">
                     <div class="main_info_card">
@@ -194,9 +194,9 @@
               </h2>
             </div>
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSecondPage">
-              <div class="card-body">
+              <div class="card-body p-5" style="height: 550px;">
 
-                <div class="sender-address float-left" style="width: 475px;">
+                <div class="sender-address float-left" style="width: 50%;">
                 <h5 class="sender-address"> Sender Address
                 </h5>
                   <form>
@@ -245,7 +245,7 @@
                   </form>
                 </div>
 
-                <div class="recipient-address float-left" style="width: 475px;">
+                <div class="recipient-address float-left" style="width: 50%;">
                   <h5 class="recipient-address"> Recipient Address
                   </h5>
                   <form>
@@ -293,6 +293,8 @@
                     </div>
                   </form>
                 </div>
+                <div class="clearfix"></div>
+                <button class="btn btn-primary float-right mt-4" onclick="proceedToPay()" >Proceed to Pay</button>
               </div>
             </div>
           </div>
@@ -300,6 +302,74 @@
       </div>
     </div>
     <div id="third-page" style="display: none;">
+      <a class="float-left p-3 mt-2 back-button" id="back-button" onclick="goToSecondPage()">
+        <img src="/app/img/back.svg" height="15px" style="margin-top: -2px;">BACK
+      </a>
+      <div class="text-center choose-card">Review and Pay</div>
+      <div class="card-header card-dark-background" id="review-your-order">
+        <h2 class="mb-0">
+          <button class="btn btn-link section-headers foucus-none" type="button" data-toggle="collapse" data-target="#review-your-order-sec" aria-expanded="true" aria-controls="collapseOne">
+            Review Your Order
+          </button>
+        </h2>
+      </div>
+      <div id="review-your-order-sec" class="collapse show">
+          <div class="card-detail-container">
+            <div class="review-order m-3">
+              <div>
+                <div class="selected-card-preview" id="selected-card-name-preview"></div>
+                <div class="other-details-review float-left">
+                  <div class="row">
+                    <label for="name" class="col-sm-3">Sender</label>
+                    <div class="col-sm-7 preview">
+                      <div id="s-address" style="white-space: pre-line;"></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="name" class="col-sm-3 ">Recipient</label>
+                    <div class="col-sm-7 preview">
+                      <div id="r-address" style="white-space: pre-line;"></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="name" class="col-sm-3">Wryting style</label>
+                    <div class="col-sm-7 preview">
+                      <div  id="wryting-style-preview"></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="name" class="col-sm-3">Message</label>
+                    <div class="col-sm-7 preview">
+                      <div id="message-preview"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="float-right mt-4">
+                  <img class="mr-3 card-cover selected-card-image" id="selected-card-img-preview">
+                  <div class="mr-3 order-totals">
+                    <div class="p-4">
+                      <div class="totals-row text-center">
+                        <span class="card-title">CARD PRICE</span>
+                        <span class="card-category" id="selected-card-price-preview"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="card-header card-dark-background" id="review-your-order">
+        <h2 class="mb-0">
+          <button class="btn btn-link section-headers foucus-none" type="button" data-toggle="collapse" data-target="#pay-and-send" aria-expanded="true" aria-controls="collapseOne">
+            Pay and Send
+          </button>
+        </h2>
+      </div>
+      <div id="pay-and-send" class="collapse">
+        <div class="card-body p-5" style="height: 550px;">
+        </div>
+      <div>
     </div>
   </body>
 </html>
