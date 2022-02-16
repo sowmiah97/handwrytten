@@ -5,7 +5,6 @@ function listCardCategories(uid) {
   let options = {
     url: 'https://api.handwrytten.com/v1/categories/list',
     method: 'GET',
-    connection_link_name: "handwrytten",
     url_query:
     [
       {
@@ -45,11 +44,10 @@ function listCategoriesInDropdown(categories) {
 }
 
 function loadSpecificCardCategory(id) {
- 
+
   var options = {
     url: `https://api.handwrytten.com/v1/cards/list?category_id=${id}`,
     method: 'GET',
-    connection_link_name: "handwrytten",
     url_query:
     [
       {
@@ -85,7 +83,6 @@ function listCards(uid) {
   let options = {
     url: 'https://api.handwrytten.com/v1/cards/list',
     method: 'GET',
-    connection_link_name: "handwrytten",
     url_query:
     [
       {
@@ -130,10 +127,10 @@ function constructCardTemplates(cards) {
     coverImage.className = 'card-img-top';
     imageDisplay.appendChild(coverImage);
 
-    let insideImage = document.createElement("img");
-    insideImage.src = card.inside_image;
-    insideImage.className = 'card-img-top img-top';
-    imageDisplay.appendChild(insideImage);
+    //let insideImage = document.createElement("img");
+    //insideImage.src = card.inside_image;
+    //insideImage.className = 'card-img-top img-top';
+    //imageDisplay.appendChild(insideImage);
 
     listItem.appendChild(imageDisplay);
 
@@ -196,7 +193,6 @@ function loadCardDetails(cardId) {
   var options = {
     url: `https://api.handwrytten.com/v1/cards/view?card_id=${cardId}`,
     method: 'GET',
-    connection_link_name: "handwrytten",
     url_query:
     [
       {
@@ -236,7 +232,6 @@ function loadFonts() {
   var options = {
     url: 'https://api.handwrytten.com/v1/fonts/list',
     method: 'GET',
-    connection_link_name: "handwrytten",
     url_query:
     [
       {
@@ -282,7 +277,6 @@ function showTemplates() {
   var options = {
     url: 'https://api.handwrytten.com/v1/templates/list',
     method: 'GET',
-    connection_link_name: "handwrytten",
     url_query:
     [
       {
@@ -354,7 +348,6 @@ function saveNewTemplate() {
   var options = {
     url: 'https://api.handwrytten.com/v1/templates/create',
     method: 'POST',
-    connection_link_name: "handwrytten",
     url_query: [
       {
         key: 'uid',
@@ -434,7 +427,6 @@ function listCreditCards() {
   let options = {
     url: 'https://api.handwrytten.com/v1/creditCards/list',
     method: 'GET',
-    connection_link_name: "handwrytten",
     url_query:
     [
       {
@@ -513,7 +505,6 @@ function sendSelectedCard()
     let options = {
         url: 'https://api.handwrytten.com/v1/orders/singleStepOrder',
         method: 'GET',
-        connection_link_name: "handwrytten",
         url_query:
         [
           {
@@ -599,4 +590,24 @@ function sendSelectedCard()
       }).catch(function(err) {
         console.log(err);
       });
+}
+function loadAddress(organization) {
+  console.log(organization);
+  document.getElementById("name").value = organization.name;
+  document.getElementById("street").value = organization.address.street_address1;
+  document.getElementById("city").value = organization.address.city;
+  document.getElementById("state").value = organization.address.state;
+  document.getElementById("country").value = organization.address.country;
+  document.getElementById("zip").value = organization.address.zip;
+  document.getElementById("phone").value = organization.phone;
+}
+function loadRecipientAddress(contact) {
+  console.log(contact.contact);
+  document.getElementById("rec-name").value = contact.contact.contact_name;
+  document.getElementById("rec-street").value = contact.contact.billing_address.address;
+  document.getElementById("rec-city").value = contact.contact.billing_address.city;
+  document.getElementById("rec-state").value = contact.contact.billing_address.state;
+  document.getElementById("rec-country").value = contact.contact.billing_address.country;
+  document.getElementById("rec-zip").value = contact.contact.billing_address.zip;
+  document.getElementById("rec-phone").value = contact.contact.billing_address.phone;
 }

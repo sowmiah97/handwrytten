@@ -23,7 +23,18 @@
       "serviceName": "handwrytten",
       "userAccess": true,
       "isUserDefinedService": true,
-      "sharedBy": "55545889"
-    }]
+      "sharedBy": "53680850"
+    },
+    {
+  	     "connectionLinkName": "zohobooks",
+  	     "connectionName": "ZohoBooks",
+	       "serviceName": "zoho_books",
+	       "userAccess": true,
+	       "isUserDefinedService": false,
+	       "sharedBy": "53680850",
+	       "scope": [
+	       "ZohoBooks.fullaccess.all"
+	      ]
+    }
+  ]
   }
-  
