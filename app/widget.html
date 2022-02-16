@@ -13,7 +13,7 @@
 	<script src="https://js.zohostatic.com/zohofinance/v1/zf_sdk.js"></script>
 	<script>
 	window.onload = function () {
-		 
+
 		 ZFAPPS.extension.init().then(function (App) {
 
 		//Get invoice data
@@ -22,35 +22,35 @@
 			}).catch(function (err) {
 				//error Handling
 			});
-		/*	
+		/*
 					//To Set data in finance app UI client
 					ZFAPPS.set('invoice.reference_number', 'REF-001').then(function (res) {
 						//response Handling
 					}).catch(function (err) {
 						//error Handling
 					});
-		
+
 					//To resize the frame size
 					ZFAPPS.invoke('RESIZE', { width: '100px', height: '100px'}).then(function (res) {
 						//response Handling
 					}).catch(function (err) {
 						//error Handling
 					});
-					
+
 					//To refresh the finance app invoice data
 					ZFAPPS.invoke('REFRESH_DATA', 'invoice').then(function (res) {
 						//response Handling
 					}).catch(function (err) {
 						//error Handling
 					});
-	
-		
-					//To listen finance app event 
+
+
+					//To listen finance app event
 					App.instance.on('ON_CHANGE', function(data){
-						//data handling 
+						//data handling
 					});
-		
-						
+
+
 					//To Know more on these, please read the documentation
 				*/
 	});
