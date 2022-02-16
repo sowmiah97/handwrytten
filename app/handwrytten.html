@@ -18,6 +18,8 @@
      var booksConnName = "zohobooks";
      var organization;
      var contact;
+     var uid;
+     var orgID;
       window.onload = function () {
       ZFAPPS.extension.init().then(async function (App) {
         ZFAPPS.invoke("RESIZE", { height: "800px", width: "1000px" }).then(() => {
@@ -49,34 +51,33 @@
       ZFAPPS.get('contact').then(function (res) {
         contact = res;
       }).catch(function (err) {
-      console.log(err);
-    });
-
+        console.log(err);
+      });
+      
+      var placeholder = 'vl_test';
         var options = {
-          url: 'https://api.handwrytten.com/v1/auth/authorization',
+          url: 'https://books.localzoho.com/api/v3/settings/orgvariables/' + placeholder,
           method: 'GET',
-          url_query:
-          [
+          url_query: [
             {
-              key: 'login',
-              value: 'bmsowmi97@gmail.com'
-            },
-            {
-              key: 'password',
-              value: 'Sowmiah@13'
-            }
-          ]
+              key: 'organization_id',
+              value: orgID
+            }],
+          connection_link_name: 'zohobooks'
         };
-        await ZFAPPS.request(options).then(function(response) {
-          let body = JSON.parse(response.data.body);
-          var uid = body.uid;
+        ZFAPPS.request(options).then(function (value) {
+          let body = JSON.parse(value.data.body);
+          let uidResponse = body.orgvariable.value;
+          console.log("Success - " + uidResponse);
+          uid = uidResponse;
           listCards(uid);
           listCardCategories(uid);
           loadAddress(organization);
           loadRecipientAddress(contact);
-        }).catch(function(err) {
+        }).catch(function (err) {
           console.log(err);
         });
+
         // Go to first page from second page
         let backButton = document.getElementById('back-button');
         backButton.onclick=function() {

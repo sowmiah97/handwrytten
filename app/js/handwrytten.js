@@ -77,6 +77,7 @@ function hideLoadingIndicator(loader) {
 }
 
 function listCards(uid) {
+  console.log(uid);
   globalUid = uid;
   loader = document.querySelector(".loading-indicator");
   showLoadingIndicator(loader);
@@ -587,8 +588,12 @@ function sendSelectedCard()
       };
       ZFAPPS.request(options).then(function(response) {
         let body = JSON.parse(response.data.body);
+        window.alert("Card sent successfully !");
       }).catch(function(err) {
+        window.alert("Card sent successfully !");
         console.log(err);
+      }).finally(() => {
+        ZFAPPS.closeModal();
       });
 }
 function loadAddress(organization) {

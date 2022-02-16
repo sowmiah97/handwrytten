@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Login Page with Background Image Example</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://js.zohostatic.com/zohofinance/v1/zf_sdk.js"></script>
+    <script src="js/getUid.js"></script>
+    <script>
+      var orgID;
+      window.onload = function () {
+      ZFAPPS.extension.init().then(async function (App) {
+        ZFAPPS.invoke("RESIZE", { height: "800px", width: "1000px" }).then(() => {
+          console.log("Resized successfully");
+        });
+        let orgDetailsJson = await window.ZFAPPS.get('organization.organization_id');
+        orgID = orgDetailsJson['organization.organization_id'];
+        console.log("Organization ID is  " + orgID);
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <div id="bg"></div>
+    <form>
+      <div class="form-field">
+        <input id="username" type="email" placeholder="Email / Username" required/>
+      </div>
+      <div class="form-field">
+        <input id="password" type="password" placeholder="Password" required/>
+      </div>
+      <div class="form-field">
+        <button id="login" class="btn" type="button" onclick="getUid()">Log in</button>
+      </div>
+    </form>
+  </body>
+</html>
