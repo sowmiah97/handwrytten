@@ -7,12 +7,6 @@
     "modules": {
       "widgets": [
         {
-          "location": "plugin.globalfields",
-          "widget_type": "modal",
-          "name": "Log in to Handwrytten",
-          "url": "/app/login.html",
-          "logo": "/app/img/handwrytten.png"
-        }, {
           "location": "customer.details.button",
           "widget_type": "modal",
           "name": "Send Handwrytten Notes",
@@ -23,15 +17,7 @@
     },
     "config": [],
     "connectors": [],
-    "usedConnections": [{
-      "connectionLinkName": "handwrytten",
-      "connectionName": "handwrytten",
-      "serviceName": "handwrytten",
-      "userAccess": true,
-      "isUserDefinedService": true,
-      "sharedBy": "53680850"
-    }, 
-    {	    
+    "usedConnections": [{	    
     "connectionLinkName": "zohobooks",
     "connectionName": "ZohoBooks",
     "serviceName": "zoho_books",
