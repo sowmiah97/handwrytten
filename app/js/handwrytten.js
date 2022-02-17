@@ -46,10 +46,14 @@ function listCategoriesInDropdown(categories) {
 function loadSpecificCardCategory(id) {
 
   var options = {
-    url: `https://api.handwrytten.com/v1/cards/list?category_id=${id}`,
+    url: 'https://api.handwrytten.com/v1/cards/list',
     method: 'GET',
     url_query:
     [
+      {
+        key: 'category_id',
+        value: id
+      },
       {
         key: 'uid',
         value: globalUid
