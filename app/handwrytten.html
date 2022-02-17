@@ -31,7 +31,7 @@
       console.log("Organization ID is  " + orgID);
 
       var options = {
-				url: 'https://books.localzoho.com/api/v3/organizations/' + orgID,
+				url: 'https://books.zoho.com/api/v3/organizations/' + orgID,
 				method: 'GET',
 				connection_link_name: booksConnName,
 				url_query:
@@ -43,7 +43,7 @@
 				]
 			};
 			await ZFAPPS.request(options).then(function (value) {
-					organization = JSON.parse(value.data.body).organization;
+				organization = JSON.parse(value.data.body).organization;
       }).catch(function (err) {
         console.log(err);
       });
